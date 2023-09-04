@@ -22,7 +22,7 @@ node {
 
     stage('Push image') {
         
-        withDockerRegistry(credentialsId: 'dockerhub', url: 'https://hub.docker.com') {
+        withDockerRegistry(credentialsId: 'dockerhub', url: 'https://registry.hub.docker.com') {
             bat 'docker push khushiporwal/sample-app:1.0-$BUILD_NUMBER'
         }
     }
