@@ -33,7 +33,7 @@ node {
           bat 'git config user.name gem-khushiporwal'
           bat 'dir' 
           bat """
-                powershell.exe -Command \"((Get-Content -path application.yaml -Raw) -replace 'khushiporwal/sample-app:\\d+', 'khushiporwal/sample-app:%BUILD_NUMBER%') | Set-Content -path application.yaml\"
+                powershell.exe -Command \"((Get-Content -path application.yaml -Raw) -replace 'image: khushiporwal/sample-app:\\d+', 'image: khushiporwal/sample-app:%BUILD_NUMBER%') | Set-Content -path application.yaml\"
                 """
           bat '''  powershell.exe -Command "Get-Content -path application.yaml " '''
         bat 'git add .'
