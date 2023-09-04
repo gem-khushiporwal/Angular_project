@@ -34,7 +34,7 @@ node {
     stage('Git Changes'){
         checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/gem-khushiporwal/test_deployment.git']]])
         withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
-          bat 'ls -a'
+          bat 'dir'
 }
     }
 }
