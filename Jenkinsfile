@@ -27,10 +27,6 @@ node {
         }
     }
     
-    // stage('Trigger ManifestUpdate') {
-    //             echo "triggering UpdateManifest job"
-    //             build job: 'UpdateManifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
-    //     }
     stage('Git Changes'){
         checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/gem-khushiporwal/test_deployment.git']]])
         withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
@@ -39,27 +35,9 @@ node {
                 powershell.exe -Command \"((Get-Content -path application.yaml -Raw) -replace 'image: khushiporwal/sample-app:\\d+', 'image:khushiporwal/sample-app:%BUILD_NUMBER%') | Set-Content -path application.yaml\"
                 """
           bat '''  powershell.exe -Command "Get-Content -path application.yaml " '''
-        //  bat '''
-        //     @echo off
-        //     setlocal enabledelayedexpansion
-        //     set "BUILD_NUMBER=%BUILD_NUMBER%"
-        //     echo !BUILD_NUMBER!
-        //     set "TMP_FILE=tempfile.txt"
-            
-        //     (for /f "tokens=*" %%A in (application.yaml) do (
-        //         set "line=%%A"
-        //         echo !line! | findstr /r /c:"^ *image: khushiporwal/sample-app:" > nul
-        //         if !errorlevel! equ 0 (
-        //             echo !line:khushiporwal/sample-app:.*=khushiporwal/sample-app:%BUILD_NUMBER%!
-        //         ) else (
-        //             echo !line!
-        //         )
-        //     )) > %TMP_FILE%
-        //     type %TMP_FILE%
-        //     move /y %TMP_FILE% application.yaml
-            
-        // '''
-        //     // bat 'type application.yaml'
+        bat 'git add .'
+        bat "git commit -m 'Changed the tag of the image' "
+        bat "git push https://github.com/gem-khushiporwal/test_deployment.git HEAD:main "    
 }
     }
 }
