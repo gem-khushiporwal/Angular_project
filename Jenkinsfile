@@ -36,7 +36,7 @@ node {
                 """
           bat '''  powershell.exe -Command "Get-Content -path application.yaml " '''
         bat 'git add .'
-        bat "git commit -m 'Changed the tag of the image' "
+        bat "git commit -m 'Changed the tag of the image'"
         bat "git push https://github.com/gem-khushiporwal/test_deployment.git HEAD:main "    
 }
     }
