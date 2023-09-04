@@ -11,8 +11,8 @@ node {
         withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
         // bat 'docker image build -f Dockerfile -t khushiporwal/sample-app:1.0-$BUILD_NUMBER -t khushiporwal/sample-app .'
        bat 'docker build -t khushiporwal/sample-app:%BUILD_NUMBER% .'
-       bat 'docker pull aquasec/trivy:0.19.2'
-       bat 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "%cd%":/root/.cache/ aquasec/trivy:0.18.3 python:3.4-alpine'
+       // bat 'docker pull aquasec/trivy:0.19.2'
+       bat 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "%cd%":/root/.cache/ aquasec/trivy:0.18.3 khushiporwal/sample-app:%BUILD_NUMBER%'
         // bat 'docker run --rm -v "%cd%":/root/.cache/ aquasec/trivy:0.19.2 image khushiporwal/sample-app:%BUILD_NUMBER%'
     }
     }
