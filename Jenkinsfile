@@ -9,7 +9,7 @@ node {
 
     stage('Build image') {
   
-       bat 'docker build -t khushiporwal/sample-app .'
+       bat 'docker build -t khushiporwal/sample-app:1.0-$BUILD_NUMBER .'
     }
 
     // stage('Test image') {
