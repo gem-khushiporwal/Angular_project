@@ -47,8 +47,9 @@ node {
                     echo !line!
                 )) > %TMP_FILE%
                 
-                move /y %TMP_FILE% application.yaml'''
-            bat 'type application.yaml'
+                move /y %TMP_FILE% application.yaml
+                 type application.yaml'''
+            // bat 'type application.yaml'
 }
     }
 }
