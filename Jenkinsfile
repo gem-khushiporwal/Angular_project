@@ -30,8 +30,7 @@ node {
     stage('Git Changes'){
         checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/gem-khushiporwal/test_deployment.git']]])
         withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-          bat 'export GITHUB_USER=GIT_USERNAME'
-          bat 'export GITHUB_TOKEN=GIT_PASSWORD'
+          bat 'git config user.name gem-khushiporwal'
           bat 'dir' 
           bat """
                 powershell.exe -Command \"((Get-Content -path application.yaml -Raw) -replace 'image: khushiporwal/sample-app:\\d+', 'image:khushiporwal/sample-app:%BUILD_NUMBER%') | Set-Content -path application.yaml\"
