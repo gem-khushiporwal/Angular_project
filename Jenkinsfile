@@ -47,9 +47,9 @@ node {
                 set "line=!line:image:khushiporwal/sample-app.*=khushiporwal/sample-app:%BUILD_NUMBER%!"
                 echo !line!
             )) > %TMP_FILE%
-            
+            type %TMP_FILE%
             move /y %TMP_FILE% application.yaml
-            type application.yaml
+            
         '''
             // bat 'type application.yaml'
 }
