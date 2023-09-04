@@ -44,8 +44,12 @@ node {
             
             (for /f "tokens=*" %%A in (application.yaml) do (
                 set "line=%%A"
-                set "line=!line:image:khushiporwal/sample-app.*=khushiporwal/sample-app:%BUILD_NUMBER%!"
-                echo !line!
+                echo !line! | findstr /r /c:"^ *image: khushiporwal/sample-app:" > nul
+                if !errorlevel! equ 0 (
+                    echo !line:khushiporwal/sample-app:.*=khushiporwal/sample-app:%BUILD_NUMBER%!
+                ) else (
+                    echo !line!
+                )
             )) > %TMP_FILE%
             type %TMP_FILE%
             move /y %TMP_FILE% application.yaml
