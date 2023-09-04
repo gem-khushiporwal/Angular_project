@@ -44,7 +44,7 @@ node {
             
             (for /f "tokens=*" %%A in (application.yaml) do (
                 set "line=%%A"
-                set "line=!line:khushiporwal/sample-app.*=khushiporwal/sample-app:!BUILD_NUMBER!!"
+                set "line=!line:khushiporwal/sample-app.*=khushiporwal/sample-app:%%BUILD_NUMBER%%!"
                 echo !line!
             )) > %TMP_FILE%
             
