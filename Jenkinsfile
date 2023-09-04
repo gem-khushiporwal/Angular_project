@@ -36,7 +36,7 @@ node {
         withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
           bat 'dir'
           bat 'cd'  
-          bat 'Get-Content -path application.yaml -Raw'
+          bat ''' powershell.exe -Command "Get-Content -path application.yaml -Raw" '''
         //  bat '''
         //     @echo off
         //     setlocal enabledelayedexpansion
