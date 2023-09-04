@@ -9,21 +9,21 @@ node {
 
     stage('Build image') {
   
-       app = docker.build("khushiporwal/sample-app")
+       bat 'docker build -t khushiporwal/sample-app .'
     }
 
-    stage('Test image') {
+    // stage('Test image') {
   
 
-        app.inside {
-            sh 'echo "Tests passed"'
-        }
-    }
+    //     app.inside {
+    //         sh 'echo "Tests passed"'
+    //     }
+    // }
 
     stage('Push image') {
         
-        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-            app.push("${env.BUILD_NUMBER}")
+        withDockerRegistry(credentialsId: 'dockerhub', url: 'https://hub.docker.com') {
+            bat 'docker push khushiporwal/sample-app:1.0-$BUILD_NUMBER'
         }
     }
     
