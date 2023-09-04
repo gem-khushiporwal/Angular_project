@@ -47,6 +47,7 @@ node {
                 )) > %TMP_FILE%
                 
                 move /y %TMP_FILE% application.yaml'''
+            bat 'type application.yaml'
 }
     }
 }
