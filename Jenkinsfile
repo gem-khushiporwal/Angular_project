@@ -31,4 +31,10 @@ node {
     //             echo "triggering UpdateManifest job"
     //             build job: 'UpdateManifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
     //     }
+    stage('Git Changes'){
+        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/gem-khushiporwal/test_deployment.git']]])
+        withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
+          bat 'ls -a'
+}
+    }
 }
