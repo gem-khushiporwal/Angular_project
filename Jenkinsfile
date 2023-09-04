@@ -36,6 +36,7 @@ node {
         withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
           bat 'dir'
           bat 'cd'  
+          bat 'Get-Content -path C:\ProgramData\Jenkins\.jenkins\workspace\sample-app\application.yaml -Raw'
         //  bat '''
         //     @echo off
         //     setlocal enabledelayedexpansion
