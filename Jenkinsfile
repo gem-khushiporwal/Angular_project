@@ -11,7 +11,7 @@ node {
         // bat 'docker image build -f Dockerfile -t khushiporwal/sample-app:1.0-$BUILD_NUMBER -t khushiporwal/sample-app .'
        bat 'docker build -t khushiporwal/sample-app:%BUILD_NUMBER% .'
        bat 'docker pull aquasec/trivy:0.19.2'
-        bat 'docker run --rm -v ./:/root/.cache/ aquasec/trivy:0.19.2 image khushiporwal/sample-app:%BUILD_NUMBER%'
+        bat 'docker run --rm -v "$cd":/root/.cache/ aquasec/trivy:0.19.2 image khushiporwal/sample-app:%BUILD_NUMBER%'
     }
 
     // stage('Test image') {
