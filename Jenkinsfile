@@ -37,7 +37,8 @@ node {
           bat 'dir'
           bat '''@echo off
                 setlocal enabledelayedexpansion
-                
+                set "BUILD_NUMBER=%BUILD_NUMBER%"
+                echo %BUILD_NUMBER%
                 set "TMP_FILE=tempfile.txt"
                 
                 (for /f "tokens=*" %%A in (application.yaml) do (
