@@ -11,7 +11,7 @@ node {
         // bat 'docker image build -f Dockerfile -t khushiporwal/sample-app:1.0-$BUILD_NUMBER -t khushiporwal/sample-app .'
        bat 'docker build -t khushiporwal/sample-app:%BUILD_NUMBER% .'
        // bat 'docker pull aquasec/trivy:0.19.2'
-        bat 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "%cd%":/root/.cache/ aquasec/trivy:0.18.3 khushiporwal/sample-app:%BUILD_NUMBER%'
+        bat 'docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "%cd%":/root/.cache/ aquasec/trivy:0.18.3 --policy custom-policy.rego khushiporwal/sample-app:%BUILD_NUMBER%'
         // bat 'docker run --rm -v "%cd%":/root/.cache/ aquasec/trivy:0.19.2 image khushiporwal/sample-app:%BUILD_NUMBER%'
     
     }
@@ -30,18 +30,18 @@ node {
         }
     }
     
-    stage('Git Changes'){
-        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/gem-khushiporwal/test_deployment.git']]])
-        withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-          bat 'git config user.name gem-khushiporwal'
-          bat 'dir' 
-          bat """
-                powershell.exe -Command \"((Get-Content -path application.yaml -Raw) -replace 'image: khushiporwal/sample-app:\\d+', 'image: khushiporwal/sample-app:%BUILD_NUMBER%') | Set-Content -path application.yaml\"
-                """
-          bat '''  powershell.exe -Command "Get-Content -path application.yaml " '''
-        bat 'git add .'
-        bat "git commit -m \"Changed the tag of the image\""
-        bat "git push https://github.com/gem-khushiporwal/test_deployment.git HEAD:main "    
-}
-    }
+//     stage('Git Changes'){
+//         checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/gem-khushiporwal/test_deployment.git']]])
+//         withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+//           bat 'git config user.name gem-khushiporwal'
+//           bat 'dir' 
+//           bat """
+//                 powershell.exe -Command \"((Get-Content -path application.yaml -Raw) -replace 'image: khushiporwal/sample-app:\\d+', 'image: khushiporwal/sample-app:%BUILD_NUMBER%') | Set-Content -path application.yaml\"
+//                 """
+//           bat '''  powershell.exe -Command "Get-Content -path application.yaml " '''
+//         bat 'git add .'
+//         bat "git commit -m \"Changed the tag of the image\""
+//         bat "git push https://github.com/gem-khushiporwal/test_deployment.git HEAD:main "    
+// }
+//     }
 }
